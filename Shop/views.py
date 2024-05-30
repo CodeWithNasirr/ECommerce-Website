@@ -7,3 +7,14 @@ def index(request):
 
 def about(request):
     return HttpResponse("We are in About")
+
+def contact(request):
+    return HttpResponse("We are in Contact")
+
+def tracker(request):
+    return HttpResponse("We are in Tracking")
+
+def checkout(request):
+    return HttpResponse("We are in CheckOut")
+def search(request):
+    return HttpResponse("We are in Search")
