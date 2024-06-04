@@ -1,83 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Listing</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0px;
-            padding: 20px;
-        }
-        .product-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0px;
-            justify-content: space-between;
-        }
-        .product-card {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            flex: 1 1 calc(33.333% - 20px); /* 3 items per row, with spacing */
-            box-sizing: border-box;
-            max-width: calc(33.333% - 20px); /* Ensure max-width matches flex basis */
-        }
-        .product-card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-        .product-details {
-            margin-top: 15px;
-        }
-        .product-details p {
-            margin: 5px 0;
-        }
-        .product-details .product-price {
-            font-size: 1.2em;
-            color: #333;
-        }
-        .product-details .product-name {
-            font-size: 1.5em;
-            color: #007BFF;
-        }
-        @media (max-width: 768px) {
-            .product-card {
-                flex: 1 1 calc(50% - 20px); /* 2 items per row on smaller screens */
-                max-width: calc(50% - 20px);
-            }
-        }
-        @media (max-width: 480px) {
-            .product-card {
-                flex: 1 1 100%; /* 1 item per row on very small screens */
-                max-width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
+{% extends 'shop/basic.html' %}
 
-<div class="product-container">
-{% for prd in product %}
-    <div class="product-card">
-        <img src="{{prd.image}}" alt="{{prd.product_name}}">
-        <div class="product-details">
-            <p class="product-name">{{prd.product_name}}</p>
-            <p><strong>Published on:</strong> {{prd.pub_date}}</p>
-            <p><strong>Category:</strong> {{prd.category}}</p>
-            <p><strong>Subcategory:</strong> {{prd.subcategory}}</p>
-            <p class="product-price"><strong>Price:</strong> ${{prd.price}}</p>
-            <p><strong>Description:</strong> {{prd.desc}}</p>
-            <p><strong>Product Id:</strong> {{prd.product_id}}</p>
-        </div>
+{% block title%} {{product.product_name}} - My Awesome Cart{% endblock %}
+{% block body %}
+<div class="container my-4">
+    <div class="row">
+    <div class="col-md-4">
+    <div class="row">
+        <img src="/media/{{product.image}}" width="233px" height="385px">
     </div>
-{% endfor %}
+        <div class="row my-3">
+            <button class="btn btn-primary">Buy Now</button>
+            <button class="btn btn-primary mx-5">Add To Cart</button>
+        </div>
+
+    </div>
+
+    <div class="col-md-8">
+        <h5>{{product.product_name}}</h5>
+        <p><b>Rs.{{product.price}} </b></p>
+        <p>{{product.desc}}</p>
+
+
+    </div>
+    </div>
+
+
 </div>
 
-</body>
-</html>
+
+
+
+{% endblock %}

@@ -7,10 +7,12 @@ color: grey;
 .col-md-3 {
 display: inline-block;
 margin-left:-4px;
+
 }
 .col-md-3 img{
-width: 255px;
+width: auto;
 height: 255px;
+object-fit:contain;
 }
 body .carousel-indicators .active{
 background-color: blue;
@@ -19,7 +21,16 @@ background-color: blue;
 body .carousel-control-prev-icon,
 body .carousel-control-next-icon{
 background-color: blue;
+
 }
+.carousel-control-prev,
+.carousel-control-next{
+top: auto;
+bottom: auto;
+margin-top: -380px;
+
+}
+
 body .no-padding{
 padding-left: 0;
 padding-right: 0;
@@ -64,48 +75,36 @@ padding-right: 0;
     </div>
 
 </div>
-<div>
-
-</div>
-
 <!-- Products Items Start Here... -->
 <div class="container">
-    <h1>New Arrivals</h1>
+    {% for product, range, nSlides in allpdts %}
+    <h1>{{product.0.category}}</h1>
     <p style="margin: 40px 16px -33px;"> New Trending Items</p>
-<div id="demo" class="carousel slide my-5" data-ride="carousel">
+<div id="demo{{forloop.counter}}" class="carousel slide my-5" data-ride="carousel">
     <!--Button Area-->
     <ul class="carousel-indicators">
         {% for i in range %}
-        <li data-target="#demo" data-slide-to="{{i}}" class="active"></li>
+        <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}" class="active"></li>
         {% endfor %}
 
     </ul>
     <div class="container carousel-inner no-padding">
 
         <div class="carousel-item active">
-            <div class="col-xs-3 col-sm-3 col-md-3">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="/media/{{product.0.image}}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{product.0.product_name}}</h5>
-                        <p class="card-text">{{product.0.desc}}</p>
-                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
-
-            {% for i in product|slice:'1:' %}
+            {% for i in product %}
             <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="card" style="width: 18rem;">
                     <img class="card-img-top" src="/media/{{i.image}}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{i.product_name}}</h5>
-                        <p class="card-text">{{i.desc}}</p>
+                        <p class="card-text">{{product.0.desc|slice:':100'}}.....</p>
                         <a href="#" class="btn btn-primary">Add to Cart</a>
+                        <a href="/Shop/productview/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary" >Quick View</button>
+                        </a>
                     </div>
                 </div>
             </div>
-            {% if forloop.counter|divisibleby:3 and forloop.counter > 0 and not forloop.last %}
+            {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
         </div>
         <div class="carousel-item">
             {% endif %}
@@ -113,15 +112,18 @@ padding-right: 0;
             {% endfor %}
         </div>
     </div>
+    </div>
 
     <!-- Left and Right controls for the slide -->
-    <a class="carousel-control-prev" href="#demo" role="button" data-slide="prev">
+    <a class="carousel-control-prev" href="#demo{{forloop.counter}}" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon"></span>
     </a>
-    <a class="carousel-control-next" href="#demo" role="button" data-slide="next">
+    <a class="carousel-control-next" href="#demo{{forloop.counter}}" role="button" data-slide="next">
         <span class="carousel-control-next-icon"></span>
     </a>
+    {% endfor %}
+</div>
+{% endblock %}
+{% block js %}
 
-</div>{% endblock %}
-
-    </div>
+ {% endblock%}
